@@ -19,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB1549E11E6EBE5F0058EC43 /* Studentenfutter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Studentenfutter.entitlements; sourceTree = "<group>"; };
 		DB6BE23B1E681E930082F7ED /* Studentenfutter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Studentenfutter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB6BE23E1E681E930082F7ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB6BE2401E681E930082F7ED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +63,7 @@
 		DB6BE23D1E681E930082F7ED /* Studentenfutter */ = {
 			isa = PBXGroup;
 			children = (
+				DB1549E11E6EBE5F0058EC43 /* Studentenfutter.entitlements */,
 				DB6BE23E1E681E930082F7ED /* AppDelegate.swift */,
 				DB6BE2401E681E930082F7ED /* ViewController.swift */,
 				DB6BE24D1E681EE10082F7ED /* Config.swift */,
@@ -108,7 +110,12 @@
 				TargetAttributes = {
 					DB6BE23A1E681E930082F7ED = {
 						CreatedOnToolsVersion = 8.2.1;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -265,10 +272,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Studentenfutter/Studentenfutter.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Studentenfutter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.hansknoechel.Studentenfutter;
+				PRODUCT_BUNDLE_IDENTIFIER = de.hansknoechel.studentenfutter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -278,10 +288,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Studentenfutter/Studentenfutter.entitlements;
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Studentenfutter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.hansknoechel.Studentenfutter;
+				PRODUCT_BUNDLE_IDENTIFIER = de.hansknoechel.studentenfutter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -306,6 +319,7 @@
 				DB6BE24C1E681E930082F7ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
