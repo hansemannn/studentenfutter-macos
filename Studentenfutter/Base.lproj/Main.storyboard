@@ -236,29 +236,27 @@
                                     <action selector="didChangeLocation:" target="XfG-lQ-9wD" id="axS-PL-oCJ"/>
                                 </connections>
                             </popUpButton>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ba6-V7-qI1">
-                                <rect key="frame" x="20" y="436" width="23" height="25"/>
-                                <buttonCell key="cell" type="roundTextured" title="&lt;" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fCa-AZ-mqv">
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XMd-YB-dZl">
+                                <rect key="frame" x="247" y="439" width="73" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="inline" title=" " bezelStyle="inline" image="arrow-right" imagePosition="overlaps" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="T9A-2U-yNF">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="menuBar"/>
+                                    <font key="font" metaFont="smallSystemBold"/>
                                 </buttonCell>
                             </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FrB-Sg-0da">
-                                <rect key="frame" x="277" y="438" width="23" height="22"/>
-                                <buttonCell key="cell" type="roundTextured" title="&gt;" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sI1-9c-oYM">
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aaW-5f-GiU">
+                                <rect key="frame" x="0.0" y="438" width="73" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="inline" title=" " bezelStyle="inline" image="arrow-left" imagePosition="overlaps" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="neq-yB-vKG">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="smallSystemBold"/>
                                 </buttonCell>
                             </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="Yli-Gv-aUL" firstAttribute="top" secondItem="BbE-ui-ZTN" secondAttribute="bottom" constant="23" id="2wf-94-iga"/>
-                            <constraint firstItem="BbE-ui-ZTN" firstAttribute="top" secondItem="FrB-Sg-0da" secondAttribute="top" id="5c3-ec-Cw1"/>
                             <constraint firstItem="Yli-Gv-aUL" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="6Uc-IY-Zod"/>
-                            <constraint firstItem="BbE-ui-ZTN" firstAttribute="leading" secondItem="Ba6-V7-qI1" secondAttribute="trailing" constant="30" id="HIT-9D-Nyu"/>
-                            <constraint firstItem="BbE-ui-ZTN" firstAttribute="top" secondItem="Ba6-V7-qI1" secondAttribute="top" id="Tid-7D-rNK"/>
                             <constraint firstItem="BbE-ui-ZTN" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="W8E-nS-Z3E"/>
-                            <constraint firstItem="FrB-Sg-0da" firstAttribute="leading" secondItem="BbE-ui-ZTN" secondAttribute="trailing" constant="30" id="dmI-vK-da0"/>
                             <constraint firstItem="BbE-ui-ZTN" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="gQH-G4-rz1"/>
                             <constraint firstAttribute="bottom" secondItem="Yli-Gv-aUL" secondAttribute="bottom" id="x4a-Gn-OFB"/>
                             <constraint firstItem="BbE-ui-ZTN" firstAttribute="centerX" secondItem="Yli-Gv-aUL" secondAttribute="centerX" id="ymZ-Ic-Jk2"/>
@@ -275,6 +273,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow-left" width="12" height="20"/>
+        <image name="arrow-right" width="12" height="20"/>
         <image name="priceBg" width="80" height="80"/>
     </resources>
 </document>
