@@ -18,6 +18,7 @@ class Request : NSObject, URLSessionDelegate, RequestDelegate {
     
     weak var delegate: RequestDelegate!
     var config: Config!
+    var url: URL!
     
     init(delegate: RequestDelegate) {
         super.init()
@@ -25,7 +26,7 @@ class Request : NSObject, URLSessionDelegate, RequestDelegate {
         self.config = Config()
     }
     
-    func load(_ url: String) {
+    func load(_ requestURL: String) {
         self.delegate.didStartLoadingWithRequest!(self)
         
         if (config.apiKey() == nil) {
@@ -33,13 +34,13 @@ class Request : NSObject, URLSessionDelegate, RequestDelegate {
             return;
         }
         
-        let urlPath = URL(string: url)
+        url = URL(string: requestURL)
         let sessionConfiguration = URLSessionConfiguration.default
         sessionConfiguration.httpAdditionalHeaders = ["Authorization" : config.apiKey()!]
         
         let session = URLSession(configuration: sessionConfiguration, delegate: self, delegateQueue: nil)
         
-        let task = session.dataTask(with: urlPath!, completionHandler: {(data, response, error) in
+        let task = session.dataTask(with: url!, completionHandler: {(data, response, error) in
             self.delegate.didFinishLoadingWithRequest!(self, data: data, response: response, error: error)
         })
         task.resume()

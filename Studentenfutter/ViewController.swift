@@ -8,12 +8,38 @@
 
 import Cocoa
 
-class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, RequestDelegate {
+public enum LocationType : Int {
+    
+    case schlossgarten
+    
+    case westerberg
+    
+    case lingen
+    
+    case vechta
+}
+
+class ViewController: NSViewController {
 
     @IBOutlet weak var tableView: NSTableView!
     
+    @IBOutlet weak var locationsButton: NSPopUpButton!
+    
+    @IBAction func didChangeLocation(_ sender: NSPopUpButton) {
+        currentLocation = LocationType(rawValue: sender.indexOfSelectedItem)
+        UserDefaults.standard.set(currentLocation.rawValue, forKey: "currentLocation")
+        
+        fetchData()
+    }
+    
+    var loader: NSProgressIndicator!
+    
+    var currentLocation: LocationType!
+    
     var request: Request!
+    
     var lunches: [Lunch] = []
+    
     var currentDate: Date! = Date() {
         didSet {
             self.fetchData()
@@ -21,7 +47,15 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     }
     
     func fetchData() {
-        self.request.load("https://api.studentenfutter-os.de/lunches/list/\(self.formattedDate("YYYY-MM-dd"))/0")
+        DispatchQueue.main.async {
+            self.lunches.removeAll()
+            self.tableView.reloadData()
+            
+            self.view.addSubview(self.loader)
+            self.loader.startAnimation(nil)
+        }
+
+        self.request.load("https://api.studentenfutter-os.de/lunches/list/\(self.formattedDate("YYYY-MM-dd"))/\(self.currentLocation.rawValue)")
     }
     
     func setUI() {
@@ -47,10 +81,17 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.currentLocation = LocationType(rawValue:UserDefaults.standard.integer(forKey: "currentLocation"))
+        self.locationsButton.selectItem(at: self.currentLocation.rawValue)
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.request = Request(delegate: self)
-
+       
+        self.loader = NSProgressIndicator(frame: NSRect(origin: CGPoint(x: self.view.frame.size.width / 2 - 10, y: self.view.frame.size.height / 2 - 10), size: CGSize(width: 20, height: 20)))
+        self.loader.style = .spinningStyle
+        self.loader.isDisplayedWhenStopped = false
+        self.view.addSubview(self.loader);
+        
         self.fetchData()
     }
 
@@ -58,39 +99,49 @@ class ViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSour
         self.tableView.gridColor = NSColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.05)
         self.tableView.gridStyleMask = .solidHorizontalGridLineMask
         self.tableView.selectionHighlightStyle = .none
-
-//        Test: Tint the window status bar
-//        self.view.window?.titlebarAppearsTransparent = true
-//        self.view.window?.backgroundColor = NSColor.init(red: 63/255, green: 195/255, blue: 234/255, alpha: 1.0)
     }
+}
 
+extension ViewController : NSTableViewDelegate, NSTableViewDataSource {
+    
     func numberOfRows(in tableView: NSTableView) -> Int {
         return self.lunches.count
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let cellID = "LunchCell"
-        
         let lunchCell: LunchTableCellView = self.tableView.make(withIdentifier: cellID, owner: self) as! LunchTableCellView
-        let lunch = self.lunches[row] 
         
-        if lunchCell.identifier == cellID {
-            lunchCell.titleLabel.stringValue = lunch.name
-            lunchCell.additivesLabel.stringValue = lunch.additivesDescription
-            lunchCell.priceLabel.stringValue = lunch.price
-            
+        guard lunchCell.identifier == cellID else {
             return lunchCell
         }
-
+        
+        let lunch = self.lunches[row]
+        
+        lunchCell.titleLabel.stringValue = lunch.name
+        lunchCell.additivesLabel.stringValue = lunch.additivesDescription
+        lunchCell.priceLabel.stringValue = lunch.price
+        
         return lunchCell
     }
+}
+
+extension ViewController : RequestDelegate {
     
     func didStartLoadingWithRequest(_ request: Request) {
         self.setWindowTitle(title:"Laden ...")
     }
     
     func didFinishLoadingWithRequest(_ request: Request, data: Data?, response: URLResponse?, error: Error?) {
-        let httpResponse: HTTPURLResponse = response as! HTTPURLResponse
+        guard let httpResponse: HTTPURLResponse = response as? HTTPURLResponse else {
+            print("🙉 Error: No valud response received!")
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.loader.startAnimation(nil)
+            self.loader.removeFromSuperview()
+        }
         
         if  httpResponse.statusCode == 200 {
             do {
