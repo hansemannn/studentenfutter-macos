@@ -8,7 +8,7 @@
 
 import Cocoa
 
-public enum LocationType : Int {
+public enum LocationType : IntegerLiteralType {
     
     case schlossgarten
     
@@ -24,6 +24,14 @@ class ViewController: NSViewController {
     @IBOutlet weak var tableView: NSTableView!
     
     @IBOutlet weak var locationsButton: NSPopUpButton!
+    
+    @IBAction func decrementDate(_ sender: Any) {
+        self.currentDate = self.currentDate.addingTimeInterval(-1 * 24 * 60 * 60)
+    }
+    
+    @IBAction func incrementDate(_ sender: Any) {
+        self.currentDate = self.currentDate.addingTimeInterval(1 * 24 * 60 * 60)
+    }
     
     @IBAction func didChangeLocation(_ sender: NSPopUpButton) {
         currentLocation = LocationType(rawValue: sender.indexOfSelectedItem)
@@ -46,7 +54,7 @@ class ViewController: NSViewController {
         }
     }
     
-    func fetchData() {
+    private func fetchData() {
         DispatchQueue.main.async {
             self.lunches.removeAll()
             self.tableView.reloadData()
@@ -58,22 +66,33 @@ class ViewController: NSViewController {
         self.request.load("https://api.studentenfutter-os.de/lunches/list/\(self.formattedDate("YYYY-MM-dd"))/\(self.currentLocation.rawValue)")
     }
     
-    func setUI() {
+    fileprivate func setUI() {
         self.tableView.reloadData()
-        self.setWindowTitle(title: "Heute, \(self.formattedDate("dd.MM.YYYY"))")
+        self.setWindowTitle(title: "\(ViewController.dayName(from: self.currentDate)), \(self.formattedDate("dd.MM.YYYY"))")
     }
     
-    func formattedDate(_ format : String) -> String {
+    private func formattedDate(_ format : String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         
         return dateFormatter.string(from: self.currentDate)
     }
     
-    func setWindowTitle(title: String) {
+    fileprivate func setWindowTitle(title: String) {
         DispatchQueue.main.async {
             self.view.window?.title = title
         }
+    }
+    
+    private class func dayName(from date: Date) -> String {
+        guard Date().compare(date) != .orderedDescending else {
+            return "Today"
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
+        
+        return formatter.string(for: date)!
     }
     
     // MARK: Delegates
@@ -94,7 +113,13 @@ class ViewController: NSViewController {
         
         self.fetchData()
     }
-
+    
+    deinit {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
+        self.request.delegate = nil
+    }
+    
     override func viewDidAppear() {
         self.tableView.gridColor = NSColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.05)
         self.tableView.gridStyleMask = .solidHorizontalGridLineMask

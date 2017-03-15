@@ -110,6 +110,7 @@
 				TargetAttributes = {
 					DB6BE23A1E681E930082F7ED = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 6K4KHD4NQF;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
@@ -275,11 +276,13 @@
 				CODE_SIGN_ENTITLEMENTS = Studentenfutter/Studentenfutter.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6K4KHD4NQF;
 				INFOPLIST_FILE = Studentenfutter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.hansknoechel.studentenfutter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6aa4182e-0dc7-4dbc-9147-9cecc1d3779e";
+				PROVISIONING_PROFILE_SPECIFIER = "Studentenfutter macOS DEV";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -291,11 +294,13 @@
 				CODE_SIGN_ENTITLEMENTS = Studentenfutter/Studentenfutter.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6K4KHD4NQF;
 				INFOPLIST_FILE = Studentenfutter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.hansknoechel.studentenfutter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "eaa3e518-bbda-4499-970e-15adfe011e0d";
+				PROVISIONING_PROFILE_SPECIFIER = "Studentenfutter macOS PROD";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
